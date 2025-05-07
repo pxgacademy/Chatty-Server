@@ -1,7 +1,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
-import {  getReceiverSocketId, io } from './../lib/socket.js';
+import { getReceiverSocketId, io } from "./../lib/socket.js";
 
 export const getUsersForSidebar = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ export const getUsersForSidebar = async (req, res) => {
 
     res.status(200).json(filteredUsers);
   } catch (error) {
-    console.log(`Error from loggedInUserId controller: ${error.message}`);
+    // console.log(`Error from loggedInUserId controller: ${error.message}`);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -31,7 +31,7 @@ export const getMessages = async (req, res) => {
 
     res.status(200).json(messages);
   } catch (error) {
-    console.log(`Error from getMessages controller: ${error.message}`);
+    // console.log(`Error from getMessages controller: ${error.message}`);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -59,15 +59,14 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
 
     // TODO: realtime functionalities goes here => socket.io
-    const receiverSocketId = getReceiverSocketId(receiverId)
-    if(receiverSocketId) {
-      io.to(receiverSocketId).emit('newMessage', newMessage)
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
-
 
     res.status(201).json(newMessage);
   } catch (error) {
-    console.log(`Error from sendMessage controller: ${error.message}`);
+    // console.log(`Error from sendMessage controller: ${error.message}`);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

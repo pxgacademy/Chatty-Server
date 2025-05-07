@@ -20,7 +20,7 @@ export const protectRoute = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.log(`Error from auth.middleware: ${error.message}`);
+    // console.log(`Error from auth.middleware: ${error.message}`);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
